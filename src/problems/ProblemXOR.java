@@ -12,15 +12,15 @@ public class ProblemXOR {
 		
 		NeuralNetwork neuralNetwork = new NeuralNetwork();
 		
-		double[][] inputs = {	{0,0},
-								{0,1},
-								{1,0},
-								{1,1}};
+		double[][] inputs = {	{0.0,0.0},
+								{0.0,1.0},
+								{1.0,0.0},
+								{1.0,1.0}};
 		
-		double[][] outputs = {	{0},
-								{1},
-								{1},
-								{0}};
+		double[][] outputs = {	{0.0},
+								{1.0},
+								{1.0},
+								{0.0}};
 		
 		System.out.println("Simulación en curso...");
 		

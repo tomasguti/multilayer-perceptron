@@ -9,21 +9,21 @@ public static final int MAX_CYCLES = 99;
 	public static void main(String[] args) {
 		NeuralNetwork neuralNetwork = new NeuralNetwork();
 		
-		double[] v21 = {2,1};
-		double[] v31 = {3,1};
-		double[] v32 = {3,1};
+		double[] v21 = {2.0,1.0};
+		double[] v31 = {3.0,1.0};
+		double[] v32 = {3.0,1.0};
 		
-		double[] v12 = {1,2};
-		double[] v13 = {1,3};
-		double[] v23 = {2,3};
+		double[] v12 = {1.0,2.0};
+		double[] v13 = {1.0,3.0};
+		double[] v23 = {2.0,3.0};
 		
-		double[] r21 = {0};
-		double[] r31 = {0};
-		double[] r32 = {0};
+		double[] r21 = {0.0};
+		double[] r31 = {0.0};
+		double[] r32 = {0.0};
 		
-		double[] r12 = {1};
-		double[] r13 = {1};
-		double[] r23 = {1};
+		double[] r12 = {1.0};
+		double[] r13 = {1.0};
+		double[] r23 = {1.0};
 		
 		
 		System.out.println("Simulación en curso...");
@@ -48,11 +48,11 @@ public static final int MAX_CYCLES = 99;
 		result = neuralNetwork.evaluate(v21);
 		Utils.print("Result 2,1", result);
 		
-		double[] test1 = {6,1};
+		double[] test1 = {6.0,1.0};
 		result = neuralNetwork.evaluate(test1);
 		Utils.print("Result 6,1", result);
 		
-		double[] test2 = {1,1};
+		double[] test2 = {1.0,1.0};
 		result = neuralNetwork.evaluate(test2);
 		Utils.print("Result 1,1", result);
 

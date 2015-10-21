@@ -20,7 +20,7 @@ public class NeuralNetwork {
 	}
 	
 	public void trainBatch(double[][] inputs, double[][] targets, int batchLenght){
-		double error = 0;
+		double error = 0.0;
 		double[] output;
 		//Forward Pass
 		for(int i = 0; i < batchLenght; i++){
@@ -53,7 +53,7 @@ public class NeuralNetwork {
 	
 	public double calculateError(double[] target, double[] output){
 		//MSE
-		double error = 0;
+		double error = 0.0;
 		for(int i=0; i < OUTPUT_LAYER_SIZE; i++){
 			error += FastMath.pow(target[i] - output[i], 2)/2;
 		}

@@ -5,22 +5,22 @@ import utils.Utils;
 
 public class Neuron {
 	
-	public static final double LEARNING_RATE = 1; //0.5
+	public static final double LEARNING_RATE = 1.0; //0.5
 	public static final double INITIAL_WEIGHT = 0.5;
 	
 	private int NUMBER_OF_INPUTS;
 	public int activationFunctionType;
 	
 	private double[] input;
-	private double output = 0;
+	private double output = 0.0;
 	
 	public double[] weights;
 	private double[] partialWeights; //Used on batch training.
 	
-	private double bias = 0;
-	private double partialBias = 0;
+	private double bias = 0.0;
+	private double partialBias = 0.0;
 	
-	private double delta = 0;
+	private double delta = 0.0;
 	
 	public int index; // Número de neurona dentro de su capa.
 
@@ -62,7 +62,7 @@ public class Neuron {
 	
 	public void hiddenLayerNeuronDelta(Layer nextLayer){
 		// Sumatoria de los errores en la siguiente capa, por los nuevos pesos del vínculo con esta neurona.
-		double sum = 0;
+		double sum = 0.0;
 		for(Neuron neuron : nextLayer.neurons){
 			sum += neuron.delta*neuron.weights[index];
 		}
@@ -85,7 +85,7 @@ public class Neuron {
 		}
 		bias = bias + LEARNING_RATE * partialBias;
 		partialWeights = new double[NUMBER_OF_INPUTS];
-		partialBias = 0;
+		partialBias = 0.0;
 	}
 
 }
