@@ -15,7 +15,7 @@ public class NeuralNetwork {
 	private Layer outputLayer;
 
 	public NeuralNetwork() {
-		//inputLayer = new Layer(INPUT_LAYER_SIZE, Neuron.ACTIVATION_FUNCTION_SIGMOIDAL);
+		//inputLayer = new Layer(INPUT_LAYER_SIZE, Neuron.ACTIVATION_FUNCTION_SIGMOID);
 		hiddenLayer = new Layer(HIDDEN_LAYER_SIZE, Neuron.ACTIVATION_FUNCTION_SIGMOID);
 		outputLayer = new Layer(OUTPUT_LAYER_SIZE, Neuron.ACTIVATION_FUNCTION_SIGMOID);
 	}
