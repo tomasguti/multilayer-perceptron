@@ -4,7 +4,7 @@ import logic.NeuralNetwork;
 import utils.Utils;
 
 public class ProblemLinealFunction {
-public static final int MAX_CYCLES = 999; 
+public static final int MAX_CYCLES = 99; 
 	
 	public static void main(String[] args) {
 		NeuralNetwork neuralNetwork = new NeuralNetwork();
@@ -30,13 +30,13 @@ public static final int MAX_CYCLES = 999;
 		
 		for(int i=0; i < MAX_CYCLES; i++){
 
-			neuralNetwork.train(v21, r21);
-			neuralNetwork.train(v31, r31);
-			neuralNetwork.train(v32, r32);
+			neuralNetwork.trainOnline(v21, r21);
+			neuralNetwork.trainOnline(v31, r31);
+			neuralNetwork.trainOnline(v32, r32);
 			
-			neuralNetwork.train(v12, r12);
-			neuralNetwork.train(v13, r13);
-			neuralNetwork.train(v23, r23);
+			neuralNetwork.trainOnline(v12, r12);
+			neuralNetwork.trainOnline(v13, r13);
+			neuralNetwork.trainOnline(v23, r23);
 		
 		}
 		

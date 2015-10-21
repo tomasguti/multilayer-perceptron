@@ -1,15 +1,12 @@
 package logic;
 
 import org.apache.commons.math3.analysis.function.Sigmoid;
-
 import utils.Utils;
 
 public class Neuron {
 	
-	//public static final int ACTIVATION_FUNCTION_LINEAR = 0;
-	public static final int ACTIVATION_FUNCTION_SIGMOID = 1;
 	public static final double LEARNING_RATE = 1; //0.5
-	public static final double INITIAL_WEIGHT = 1;
+	public static final double INITIAL_WEIGHT = 0.5;
 	
 	private int NUMBER_OF_INPUTS;
 	public int activationFunctionType;
@@ -18,7 +15,11 @@ public class Neuron {
 	private double output = 0;
 	
 	public double[] weights;
+	private double[] partialWeights; //Used on batch training.
+	
 	private double bias = 0;
+	private double partialBias = 0;
+	
 	private double delta = 0;
 	
 	public int index; // Número de neurona dentro de su capa.
@@ -31,13 +32,14 @@ public class Neuron {
 	public void setInput(double[] input, int size){
 		this.input = input;
 		NUMBER_OF_INPUTS = size;
-		if(Utils.length(weights) == 0){
+		if(Utils.length(weights) == 0){ 
+			//Only the first time we set the input.
 			weights = new double[NUMBER_OF_INPUTS];
+			partialWeights = new double[NUMBER_OF_INPUTS];
 			for(int i=0; i < NUMBER_OF_INPUTS; i++){
 				weights[i] = Math.random();
 				//weights[i] = INITIAL_WEIGHT; // El problema del XOR no functiona con esto.
 			}
-			Utils.print("Initial W", weights);
 		}
 	}
 	
@@ -53,7 +55,9 @@ public class Neuron {
 	
 	public void outputLayerNeuronDelta(double target){
 		// output*(1-output) es la derivada de la sigmoidal, podemos usar la lineal.
+		//Gradiente de error.
 		delta = (target-output)*output*(1-output);
+		partialIncrements();
 	}
 	
 	public void hiddenLayerNeuronDelta(Layer nextLayer){
@@ -62,14 +66,26 @@ public class Neuron {
 		for(Neuron neuron : nextLayer.neurons){
 			sum += neuron.delta*neuron.weights[index];
 		}
+		//Gradiente de error.
 		delta = sum*output*(1-output);
+		partialIncrements();
+	}
+	
+	public void partialIncrements(){
+		//Incremento parcial de los pesos para el patrón
+		for(int i=0; i < NUMBER_OF_INPUTS; i++){
+			partialWeights[i] += delta * input[i];
+		}
+		partialBias += delta;
 	}
 
 	public void updateWeights(){
 		for(int i=0; i < NUMBER_OF_INPUTS; i++){
-			weights[i] = weights[i] + LEARNING_RATE * delta * input[i];
+			weights[i] = weights[i] + LEARNING_RATE * partialWeights[i];
 		}
-		bias = bias + LEARNING_RATE * delta;
+		bias = bias + LEARNING_RATE * partialBias;
+		partialWeights = new double[NUMBER_OF_INPUTS];
+		partialBias = 0;
 	}
 
 }
