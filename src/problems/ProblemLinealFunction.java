@@ -3,7 +3,7 @@ package problems;
 import logic.NeuralNetwork;
 import utils.Utils;
 
-public class ProblemLinealFunction {
+public class ProblemLinealFunction { ///
 public static final int MAX_CYCLES = 99; 
 	
 	public static void main(String[] args) {
