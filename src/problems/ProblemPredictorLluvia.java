@@ -24,15 +24,15 @@ public class ProblemPredictorLluvia {
 				for(int j=0; j < 12; j++){ // j es el mes
 					for(int k=0; k < years - 1;k++){// se crea el lote para el mes j
 						if(k != i){
-							lote[k - aux][0] = j/11; // mes
-							lote[k - aux][1] = (data[1][k*12 + j] - 2002)/13; //año
-							targets[k - aux][0] = data[2][k*12 + j]/557; //lluvia
+							lote[k - aux][0] = j/11.0; // mes
+							lote[k - aux][1] = (data[1][k*12 + j] - 2002)/13.0; //año
+							targets[k - aux][0] = data[2][k*12 + j]/557.0; //lluvia
 						}
 						else{
 							aux = 1;
-							validation[j][0] = j/11;
-							validation[j][1] = (data[1][k*12 + j] - 2002)/13;
-							validation[j][2] = data[2][k*12 + j]/557;
+							validation[j][0] = j/11.0;
+							validation[j][1] = (data[1][k*12 + j] - 2002)/13.0;
+							validation[j][2] = data[2][k*12 + j]/557.0;
 						}
 					}
 					aux = 0;
