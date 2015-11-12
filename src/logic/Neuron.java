@@ -32,7 +32,7 @@ public class Neuron {
 	public void setInput(double[] input, int size){
 		this.input = input;
 		NUMBER_OF_INPUTS = size;
-		if(Utils.length(weights) == 0){ 
+		if(Utils.length(weights) == 0){
 			//Only the first time we set the input.
 			weights = new double[NUMBER_OF_INPUTS];
 			partialWeights = new double[NUMBER_OF_INPUTS];

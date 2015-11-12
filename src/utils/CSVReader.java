@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CSVReader {
 	
-	public static int DATA_LENGTH = 155;
+	public static int DATA_LENGTH = 156;
 	
 	public static void main(String[] args) {
 		CSVReader.getData();
@@ -36,6 +36,7 @@ public class CSVReader {
 			data[2][rowIndex] = Double.parseDouble(row[3]); //Rain
 			
 			System.out.println(data[0][rowIndex] + "/" + data[1][rowIndex] + " " + data[2][rowIndex] );
+			rowIndex++;
 		}
 
 	} catch (FileNotFoundException e) {
@@ -51,8 +52,9 @@ public class CSVReader {
 			}
 		}
 	}
-
+	
 	System.out.println("Done loading data.");
+	
 	return data;
   }
 
