@@ -7,7 +7,7 @@ import utils.Utils;
 public class NeuralNetwork {
 
 	public static final int INPUT_LAYER_SIZE = 2;
-	public static final int HIDDEN_LAYER_SIZE = 2; 
+	public static final int HIDDEN_LAYER_SIZE = 6; 
 	public static final int OUTPUT_LAYER_SIZE = 1; 
 	
 	//private Layer inputLayer;
@@ -31,7 +31,20 @@ public class NeuralNetwork {
 		}
 		hiddenLayer.updateWeights();
 		outputLayer.updateWeights();
-		System.out.println("Error = "+error);
+		//System.out.println("Error = "+error);
+	}
+	
+	public double calculateErrorBatch(double[][] inputs, double[][] targets, int batchLenght){
+		double error = 0.0;
+		double[] output;
+		//Forward Pass
+		for(int i = 0; i < batchLenght; i++){
+			output = evaluate(inputs[i]);
+			error += calculateError(targets[i], output);
+		}
+		
+		System.out.println("Validation Error = "+error);
+		return error;
 	}
 	
 	public void trainOnline(double[] input, double[] target){

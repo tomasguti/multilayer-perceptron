@@ -5,7 +5,7 @@ import utils.Utils;
 
 public class Neuron {
 	
-	public static final double LEARNING_RATE = 1.0; //0.5
+	public static final double LEARNING_RATE = 0.1; //0.5
 	public static final double INITIAL_WEIGHT = 0.5;
 	
 	private int NUMBER_OF_INPUTS;
