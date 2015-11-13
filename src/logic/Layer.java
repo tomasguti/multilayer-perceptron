@@ -49,5 +49,17 @@ public class Layer {
 			neuron.updateWeights();
 		}
 	}
-
+	
+	public void saveState(){
+		for(Neuron neuron: neurons){
+			neuron.saveState();
+		}
+	}
+	
+	public void goBackState(){
+		for(Neuron neuron: neurons){
+			neuron.goBackState();
+		}
+	}
+	
 }

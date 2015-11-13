@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class CSVReader {
 	
-	public static int DATA_LENGTH = 156;
+	public static int DATA_LENGTH = 168;
 	
 	public static void main(String[] args) {
 		CSVReader.getData();

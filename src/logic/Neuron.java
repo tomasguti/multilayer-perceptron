@@ -16,9 +16,11 @@ public class Neuron {
 	
 	public double[] weights;
 	private double[] partialWeights; //Used on batch training.
+	private double[] saveWeights;
 	
 	private double bias = 0.0;
 	private double partialBias = 0.0;
+	private double saveBias = 0.0;
 	
 	private double delta = 0.0;
 	
@@ -87,5 +89,21 @@ public class Neuron {
 		partialWeights = new double[NUMBER_OF_INPUTS];
 		partialBias = 0.0;
 	}
-
+	
+	public void saveState(){
+		if(Utils.length(saveWeights) == 0){
+			saveWeights = new double[NUMBER_OF_INPUTS];
+		}
+		for(int i=0; i < NUMBER_OF_INPUTS; i++){
+			saveWeights[i] = weights[i];
+		}
+		saveBias = bias;
+	}
+	
+	public void goBackState(){
+		for(int i=0; i < NUMBER_OF_INPUTS; i++){
+			weights[i] = saveWeights[i];
+		}
+		bias = saveBias;
+	}
 }

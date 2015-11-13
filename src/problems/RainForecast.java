@@ -19,6 +19,8 @@ public class RainForecast {
 		double data[][] = CSVReader.getData();
 		int YEARS = data[0].length/12-1;
 		int yearOut = YEARS; //Año que dejamos afuera, Leave-one-out
+		double lastError = 10000;
+		double newError = 0;
 		for(int cycle = 0; cycle < MAX_CYCLES; cycle++){
 			for(int year = 0; year < YEARS; year++){
 				double[][] trainBatch = new double[MONTHS_IN_A_YEAR][2];
@@ -38,7 +40,15 @@ public class RainForecast {
 					neuralNetwork.trainBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
 				}else{
 					//Validation
-					neuralNetwork.calculateErrorBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
+					newError = neuralNetwork.calculateErrorBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
+					if (newError <= lastError){ // no anda bien pq el error no es monótono decreciente, sino que oscila
+						lastError = newError;
+						neuralNetwork.saveState(); // For early-stopping
+					}else{
+						// Stop simulation and go back
+						neuralNetwork.goBackState();
+						cycle = MAX_CYCLES;
+					}
 				}			
 			}
 			//System.out.println("Year left out: "+yearOut);

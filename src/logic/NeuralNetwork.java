@@ -85,4 +85,17 @@ public class NeuralNetwork {
 		System.out.println("");
 	}
 	
+	public void saveState(){
+		hiddenLayer.saveState();
+		outputLayer.saveState();
+	}
+	
+	public void goBackState(){
+		hiddenLayer.goBackState();
+		outputLayer.goBackState();
+	}
+	
+	public void pruning(){
+		
+	}
 }
