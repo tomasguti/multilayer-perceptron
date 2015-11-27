@@ -6,8 +6,8 @@ import utils.Utils;
 
 public class NeuralNetwork {
 
-	public static final int INPUT_LAYER_SIZE = 2;
-	public static final int HIDDEN_LAYER_SIZE = 6; 
+	public static final int INPUT_LAYER_SIZE = 16;
+	public static final int HIDDEN_LAYER_SIZE = 16; 
 	public static final int OUTPUT_LAYER_SIZE = 1; 
 	
 	//private Layer inputLayer;
