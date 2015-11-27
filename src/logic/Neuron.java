@@ -1,15 +1,14 @@
 package logic;
 
-import org.apache.commons.math3.analysis.function.Sigmoid;
 import utils.Utils;
 
 public class Neuron {
 	
 	public static final double LEARNING_RATE = 0.1; //0.5
-	public static final double INITIAL_WEIGHT = 0.5;
+	public static final double INITIAL_WEIGHT = 0.0;
 	
 	private int NUMBER_OF_INPUTS;
-	public int activationFunctionType;
+	public ActivationFunction function;
 	
 	private double[] input;
 	private double output = 0.0;
@@ -28,7 +27,7 @@ public class Neuron {
 
 	public Neuron(int index, int activationFunctionType) {
 		this.index = index;
-		this.activationFunctionType = activationFunctionType;
+		function = new ActivationFunction(activationFunctionType);
 	}
 	
 	public void setInput(double[] input, int size){
@@ -50,15 +49,14 @@ public class Neuron {
 		for(int i=0; i < NUMBER_OF_INPUTS; i++){
 			weigthedSum += input[i] * weights[i];
 		}
-		Sigmoid s = new Sigmoid();
-		output = s.value(weigthedSum + bias);
+		output = function.value(weigthedSum + bias);
 		return output;
 	}
 	
 	public void outputLayerNeuronDelta(double target){
 		// output*(1-output) es la derivada de la sigmoidal, podemos usar la lineal.
 		//Gradiente de error.
-		delta = (target-output)*output*(1-output);
+		delta = (target-output)*function.derived(output);
 		partialIncrements();
 	}
 	
@@ -69,7 +67,7 @@ public class Neuron {
 			sum += neuron.delta*neuron.weights[index];
 		}
 		//Gradiente de error.
-		delta = sum*output*(1-output);
+		delta = sum*function.derived(output);
 		partialIncrements();
 	}
 	

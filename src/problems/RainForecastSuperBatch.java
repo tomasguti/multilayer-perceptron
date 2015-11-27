@@ -3,7 +3,7 @@ package problems;
 import logic.NeuralNetwork;
 import utils.CSVReader;
 
-public class RainForecast {
+public class RainForecastSuperBatch {
 	
 	public static final int MAX_CYCLES = 99999; 
 	public static final int MONTHS_IN_A_YEAR = 12; 
@@ -17,40 +17,32 @@ public class RainForecast {
 		NeuralNetwork neuralNetwork = new NeuralNetwork();
 		
 		double data[][] = CSVReader.getData();
-		int YEARS = data[0].length/12;
+		int YEARS = data[0].length/12-1;
 		int yearOut = YEARS; //Año que dejamos afuera, Leave-one-out
-		double lastError = 10000;
-		double newError = 0;
 		for(int cycle = 0; cycle < MAX_CYCLES; cycle++){
-			for(int year = 0; year < YEARS; year++){
-				double[][] trainBatch = new double[MONTHS_IN_A_YEAR][2];
-				double[][] targetBatch = new double[MONTHS_IN_A_YEAR][1];	
-				for(int month=0; month < MONTHS_IN_A_YEAR; month++){
+			//for(int year = 0; year < YEARS; year++){
+				double[][] trainBatch = new double[MONTHS_IN_A_YEAR*YEARS][2];
+				double[][] targetBatch = new double[MONTHS_IN_A_YEAR*YEARS][1];	
+				for(int month=0; month < MONTHS_IN_A_YEAR*YEARS; month++){
 					
-					double dataMonth = data[0][year*MONTHS_IN_A_YEAR + month];
-					double dataYear = data[1][year*MONTHS_IN_A_YEAR + month];
-					double dataTarget = data[2][year*MONTHS_IN_A_YEAR + month];
+					double dataMonth = data[0][month];
+					double dataYear = data[1][month];
+					double dataTarget = data[2][month];
 					
 					trainBatch[month][0] = normalize(dataMonth, 1, MONTHS_IN_A_YEAR);
 					trainBatch[month][1] = normalize(dataYear, MIN_YEAR, MAX_YEAR);
 					targetBatch[month][0] = normalize(dataTarget, 0, MAX_RAIN);
 				}
+				neuralNetwork.trainBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR*YEARS);
+				/*
 				if(year != yearOut){
 					//Training
 					neuralNetwork.trainBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
 				}else{
 					//Validation
-					newError = neuralNetwork.calculateErrorBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
-					if (newError <= lastError){ // no anda bien pq el error no es monótono decreciente, sino que oscila
-						lastError = newError;
-						neuralNetwork.saveState(); // For early-stopping
-					}else{
-						// Stop simulation and go back
-						neuralNetwork.goBackState();
-						cycle = MAX_CYCLES;
-					}
-				}			
-			}
+					neuralNetwork.calculateErrorBatch(trainBatch, targetBatch, MONTHS_IN_A_YEAR);
+				}*/		
+			//}
 			//System.out.println("Year left out: "+yearOut);
 			yearOut--;
 			if(yearOut < 0){
@@ -60,10 +52,8 @@ public class RainForecast {
 		
 		//TEST! Con el año 2015
 		
-		for(int i=2002; i< 2015; i++){
-			testYear(neuralNetwork, data, i);
-		}
-		
+		testYear(neuralNetwork, data, 2005);
+		testYear(neuralNetwork, data, 2015);
 		
 	}
 	
@@ -77,7 +67,7 @@ public class RainForecast {
 			double[] output = new double[1];
 			double[] target = new double[1];
 			
-			int indexData = (TEST_YEAR - MIN_YEAR)*MONTHS_IN_A_YEAR + month; 
+			int indexData = (TEST_YEAR - MIN_YEAR-1)*MONTHS_IN_A_YEAR + month;
 			
 			output[0] = consult(neuralNetwork, data[0][indexData], data[1][indexData]);
 			target[0] = data[2][indexData];
@@ -88,12 +78,10 @@ public class RainForecast {
 			double error = target[0]-output[0];
 			double lse = neuralNetwork.calculateError(target, output);
 			
-			System.out.println("Test error month: "+(month+1)+" error = "+error+" lse = "+lse);
+			System.out.println("Test error "+TEST_YEAR+" month: "+(month+1)+" error = "+error+" lse = "+lse);
 		}
-		if(TEST_YEAR >= 2008){
-			TEST_YEAR++;
-		}
-		System.out.println("Total "+(TEST_YEAR)+" predicted = "+totalPredicted+" real = "+totalReal);
+		
+		System.out.println("Total "+TEST_YEAR+" predicted = "+totalPredicted+" real = "+totalReal);
 	}
 	
 	public static double consult(NeuralNetwork neuralNetwork, double testMonth, double testYear){

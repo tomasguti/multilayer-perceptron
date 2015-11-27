@@ -15,8 +15,8 @@ public class NeuralNetwork {
 	private Layer outputLayer;
 
 	public NeuralNetwork() {
-		hiddenLayer = new Layer(HIDDEN_LAYER_SIZE, Layer.ACTIVATION_FUNCTION_SIGMOID);
-		outputLayer = new Layer(OUTPUT_LAYER_SIZE, Layer.ACTIVATION_FUNCTION_SIGMOID);
+		hiddenLayer = new Layer(HIDDEN_LAYER_SIZE, ActivationFunction.SIGMOID);
+		outputLayer = new Layer(OUTPUT_LAYER_SIZE, ActivationFunction.LINEAR);
 	}
 	
 	public void trainBatch(double[][] inputs, double[][] targets, int batchLenght){
@@ -43,7 +43,7 @@ public class NeuralNetwork {
 			error += calculateError(targets[i], output);
 		}
 		
-		System.out.println("Validation Error = "+error);
+		//System.out.println("Validation Error = "+error);
 		return error;
 	}
 	
