@@ -5,7 +5,7 @@ import utils.CSVReader2;
 
 public class BankProblem {
 	
-	public static final int MAX_CYCLES = 99999;
+	public static final int MAX_CYCLES = 99;
 	public static final int BATCH_LENGTH = 40000;
 	public static final int VALIDATION_LENGTH = 4000;
 	public static final int TEST_LENGTH = 1211;
@@ -16,7 +16,7 @@ public class BankProblem {
 	public static final int MIN_JOB = 1;
 	public static final int MAX_MARITAL = 3; 
 	public static final int MIN_MARITAL = 1;
-	public static final int MAX_EDUCATION = 3; 
+	public static final int MAX_EDUCATION = 4; 
 	public static final int MIN_EDUCATION = 1;
 	public static final int MAX_DEFAULT = 2; 
 	public static final int MIN_DEFAULT = 1;
@@ -26,7 +26,7 @@ public class BankProblem {
 	public static final int MIN_HOUSING = 1;
 	public static final int MAX_LOAN = 2; 
 	public static final int MIN_LOAN = 1;
-	public static final int MAX_CONTACT = 2; 
+	public static final int MAX_CONTACT = 3; 
 	public static final int MIN_CONTACT = 1;
 	public static final int MAX_DAY = 31; 
 	public static final int MIN_DAY = 1;
@@ -40,7 +40,7 @@ public class BankProblem {
 	public static final int MIN_PDAYS = -1;
 	public static final int MAX_PREVIOUS = 275; 
 	public static final int MIN_PREVIOUS = 0;
-	public static final int MAX_POUTCOME = 3; 
+	public static final int MAX_POUTCOME = 4; 
 	public static final int MIN_POUTCOME = 1;
 	public static final int MAX_Y = 2; 
 	public static final int MIN_Y = 1;
@@ -130,6 +130,10 @@ public class BankProblem {
 			trainBatch[index][14] = normalize(dataPrevious, MIN_PREVIOUS, MAX_PREVIOUS);
 			trainBatch[index][15] = normalize(dataPoutcome, MIN_POUTCOME, MAX_POUTCOME);
 			targetBatch[index][0] = normalize(dataTarget, MIN_Y, MAX_Y);
+		
+			/*for(int j=0;j<16;j++)
+				System.out.print(trainBatch[index][j] + " ");
+			System.out.println();*/
 			
 			index ++;
 		}		

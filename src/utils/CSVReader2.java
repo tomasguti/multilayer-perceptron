@@ -97,6 +97,9 @@ public class CSVReader2 {
 			else if(aux.compareTo("tertiary") == 0){
 				data[3][rowIndex] = 3;
 			}
+			else if(aux.compareTo("unknown") == 0){
+				data[3][rowIndex] = 4;
+			}
 			
 			aux = row[4]; //Default
 			
@@ -129,11 +132,14 @@ public class CSVReader2 {
 			
 			aux = row[8]; //Contact
 			
-			if(aux.compareTo("no") == 0){
+			if(aux.compareTo("unknown") == 0){
 				data[8][rowIndex] = 1;
 			}
-			else if(aux.compareTo("yes") == 0){
+			else if(aux.compareTo("cellular") == 0){
 				data[8][rowIndex] = 2;
+			}
+			else if(aux.compareTo("telephone") == 0){
+				data[8][rowIndex] = 3;
 			}
 			
 			data[9][rowIndex] = Double.parseDouble(row[9]); //Day
@@ -193,6 +199,9 @@ public class CSVReader2 {
 			else if(aux.compareTo("other") == 0){
 				data[15][rowIndex] = 3;
 			}
+			else if(aux.compareTo("success") == 0){
+				data[15][rowIndex] = 4;
+			}
 			
 			aux = row[16]; //y
 			
@@ -203,10 +212,10 @@ public class CSVReader2 {
 				data[16][rowIndex] = 2;
 			}
 			
-			for(int i=0; i < 17; i++){
+			/*for(int i=0; i < 17; i++){
 				System.out.print(data[i][rowIndex] + " ");
 			}
-			System.out.print("\n");
+			System.out.print("\n");*/
 			rowIndex++;
 		}
 

@@ -31,7 +31,7 @@ public class NeuralNetwork {
 		}
 		hiddenLayer.updateWeights();
 		outputLayer.updateWeights();
-		//System.out.println("Error = "+error);
+		System.out.println("Error = "+error);
 	}
 	
 	public double calculateErrorBatch(double[][] inputs, double[][] targets, int batchLenght){
@@ -43,7 +43,7 @@ public class NeuralNetwork {
 			error += calculateError(targets[i], output);
 		}
 		
-		//System.out.println("Validation Error = "+error);
+		System.out.println("Validation Error = "+error);
 		return error;
 	}
 	
