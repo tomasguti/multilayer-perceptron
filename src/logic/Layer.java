@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 public class Layer {
 	
-	public static final int ACTIVATION_FUNCTION_LINEAR = 0;
-	public static final int ACTIVATION_FUNCTION_SIGMOID = 1;
-	
 	public ArrayList<Neuron> neurons;
 
 	public Layer(int neuronsNumber, int activationFunctionType) {
