@@ -57,52 +57,44 @@ public class BankProblemOnline {
 		double[][] trainBatch = new double[BATCH_LENGTH+VALIDATION_LENGTH+TEST_LENGTH][16];
 		double[][] targetBatch = new double[BATCH_LENGTH+VALIDATION_LENGTH+TEST_LENGTH][1];
 		
-		for(int cycle = 0; cycle < MAX_CYCLES; cycle++){
-		batchBuild(data,trainBatch,targetBatch, 0, BATCH_LENGTH+VALIDATION_LENGTH+TEST_LENGTH); // Se arma el lote
-			for(int i=0; i < BATCH_LENGTH; i++){
-				neuralNetwork.trainOnline(trainBatch[i], targetBatch[i]);
-			}
-		}
-		/*
+		batchBuild(data, trainBatch, targetBatch, 0, BATCH_LENGTH+VALIDATION_LENGTH+TEST_LENGTH); // Se arma el lote
+		
 		for(int cycle = 0; cycle < MAX_CYCLES; cycle++){
 			
 			//Training
+			for(int i = 0; i < BATCH_LENGTH; i++){
+				neuralNetwork.trainOnline(trainBatch[i], targetBatch[i]);
+			}
 			
-			batchBuild(data,trainBatch,targetBatch, 0, BATCH_LENGTH); // Se arma el lote
+			//Validation error
+			for(int i = BATCH_LENGTH; i < BATCH_LENGTH + VALIDATION_LENGTH; i++){
+				double[] result = neuralNetwork.evaluate(trainBatch[i]);
+				double error = neuralNetwork.calculateError(result, targetBatch[i]);
+				newError += error;
+			}
 			
-			neuralNetwork.trainBatch(trainBatch, targetBatch, BATCH_LENGTH); // Se entrena		
-			
-			// Validation
-			
-			batchBuild(data,trainBatch,targetBatch,BATCH_LENGTH,BATCH_LENGTH + VALIDATION_LENGTH);
-			
-			newError = neuralNetwork.calculateErrorBatch(trainBatch, targetBatch, VALIDATION_LENGTH);
-			
-			
-			if (newError <= lastError){ // no anda bien pq el error no es monótono decreciente, sino que oscila
+			//Early Stopping
+			if (newError <= lastError){
 				lastError = newError;
 				neuralNetwork.saveState(); // For early-stopping
 			}else{ // Stop simulation and go back
+				System.out.println("Early Stop!");
 				neuralNetwork.goBackState();
-				cycle = MAX_CYCLES;
+				break;
 			}
 			
-			
+			System.out.println("Validation Error "+newError);
+			newError = 0;
 		}
-		*/
+		
+		neuralNetwork.printWeights();
+		
 		// Test
-		
-		//batchBuild(data,trainBatch,targetBatch,BATCH_LENGTH + VALIDATION_LENGTH, BATCH_LENGTH + VALIDATION_LENGTH + TEST_LENGTH);
-		
-		// Completar
-		
-		for(int i=BATCH_LENGTH; i < BATCH_LENGTH + VALIDATION_LENGTH + TEST_LENGTH; i++){
+		for(int i=BATCH_LENGTH + VALIDATION_LENGTH; i < BATCH_LENGTH + VALIDATION_LENGTH + TEST_LENGTH; i++){
 			double[] result = neuralNetwork.evaluate(trainBatch[i]);
-			
 			if(result[0]>0.80){
 				System.out.println(i+". Predicted "+String.format("%.2f", result[0])+" Real "+targetBatch[i][0]);
 			}
-			
 		}
 		
 	}

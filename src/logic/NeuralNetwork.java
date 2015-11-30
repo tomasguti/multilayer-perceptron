@@ -94,8 +94,5 @@ public class NeuralNetwork {
 		hiddenLayer.goBackState();
 		outputLayer.goBackState();
 	}
-	
-	public void pruning(){
-		
-	}
+
 }
